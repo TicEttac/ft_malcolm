@@ -7,9 +7,17 @@
 # include <stdlib.h>
 # include <errno.h>
 # include <sys/types.h>
+# include <sys/ioctl.h>
+# include <ifaddrs.h>
 # include <sys/socket.h>
 # include <arpa/inet.h>
 # include <netinet/in.h>
+# include <net/if.h>
+# include <linux/if_ether.h>
+
+# define AR_PROTOCOL 0x0806
+# define REQUEST 1 << 4
+# define REPLY 	2 << 4
 
 typedef struct	s_args
 {

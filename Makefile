@@ -13,3 +13,10 @@ all:	$(NAME)
 
 $(NAME):
 	$(CC) $(CFLAGS) $(SRCS) -I $(INC) -o $(NAME)
+
+clean:
+	rm -rf $(NAME)
+
+fclean: clean
+
+re: fclean all
