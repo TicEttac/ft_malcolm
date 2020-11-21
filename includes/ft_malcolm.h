@@ -27,6 +27,13 @@ typedef struct	s_args
 	uint8_t		trg_mac[6];
 }		t_args;
 
+typedef struct s_io
+{
+	struct sockaddr	pa;
+	struct sockaddr	ha;
+	int		flag;
+}		t_io;
+
 typedef struct	s_arp
 {
 	//HEADER
