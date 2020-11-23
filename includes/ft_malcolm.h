@@ -14,6 +14,7 @@
 # include <netinet/in.h>
 # include <net/if.h>
 # include <linux/if_ether.h>
+# include <netpacket/packet.h>
 
 # define AR_PROTOCOL 0x0806
 # define REQUEST 1 << 4
