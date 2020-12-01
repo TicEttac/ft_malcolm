@@ -29,7 +29,8 @@ uint8_t		*get_mac()
 				ll = (struct sockaddr_ll *)ptr->ifa_addr;
 				ret = NULL;	
 				if ((ret = malloc(sizeof(uint8_t) * ll->sll_halen)))
-					ret = memcpy(ret, (uint8_t *)ll->sll_addr, ll->sll_halen);
+					ret = memcpy(ret, (uint8_t *)ll->sll_addr,
+							sizeof(uint8_t) * ll->sll_halen);
 				freeifaddrs(addr);
 				return (ret);
 			}
@@ -40,12 +41,19 @@ uint8_t		*get_mac()
 	return (NULL);
 }
 
-void	setup_packet(int sock, t_args *args, t_arp *packet)
+void	setup_packet(t_args *args, t_arp *packet)
 {
+	cpmac(&(packet->dst_mac[0]), args->trg_mac);
 	packet->protocol = AR_PROTOCOL;
+	packet->hrd = htons(1);//ethernet type
+	packet->pro = htons(0x0800);
 	packet->hln = 6;
 	packet->pln = 4;
 	packet->op = REPLY;
+	cpmac(&(packet->sha[0]), args->src_mac);
+	packet->spa = args->src_ip;
+	cpmac(&(packet->tha[0]), args->trg_mac);
+	packet->tpa = args->trg_ip;
 }
 
 int	main(int ac, char **av)
@@ -64,16 +72,18 @@ int	main(int ac, char **av)
 		close(sock);
 		return (end("get_mac error.\n", -1));
 	}
-	int i = 0;
-	while (mac[i])
-	{
-		printf("%d:", mac[i]);
-		i++;
-	}
+	cpmac(&(packet.src_mac[0]), mac);
+	free(mac);
+	setup_packet(&args, &packet);
+/*	printf("src_mac ");
+	for (int i = 0; i < 6; i++)
+	{printf("%d:", packet.src_mac[i]);}
 	printf("\n");
-	setup_packet(sock, &args, &packet);
-	close(sock);
+	printf("dst_mac ");
+	for (int i = 0; i < 6; i++)
+	{printf("%d:", packet.dst_mac[i]);}
+	printf("\n");
+*/	close(sock);
 	printf("everything went well.\n");
 	return (0);
-
 }
