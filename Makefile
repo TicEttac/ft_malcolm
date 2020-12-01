@@ -1,5 +1,6 @@
 SRCS =	ft_malcolm.c	\
 	parsing.c	\
+	utils.c		\
 
 INC =	includes
 

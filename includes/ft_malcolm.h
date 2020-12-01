@@ -20,22 +20,22 @@
 # define REQUEST 1 << 4
 # define REPLY 	2 << 4
 
-typedef struct	s_args
+typedef struct			s_args
 {
 	in_addr_t	src_ip;
 	uint8_t		src_mac[6];
 	in_addr_t	trg_ip;
 	uint8_t		trg_mac[6];
-}		t_args;
+}				t_args;
 
-typedef struct s_io
+typedef struct			s_io
 {
 	struct sockaddr	pa;
 	struct sockaddr	ha;
 	int		flag;
-}		t_io;
+}				t_io;
 
-typedef struct	s_arp
+typedef struct			s_arp
 {
 	//HEADER
 	uint8_t		dst_mac[6];
@@ -51,8 +51,9 @@ typedef struct	s_arp
 	in_addr_t	spa;
 	uint8_t		tha[6];
 	in_addr_t	tpa;
-}		t_arp;
+} __attribute__((packed))	t_arp;
 
+void	cpmac(uint8_t *dst, uint8_t src[6]);
 int	parse_args(int ac, char **av, t_args *args);
 
 #endif
