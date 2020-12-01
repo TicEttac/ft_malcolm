@@ -56,7 +56,7 @@ int	main(int ac, char **av)
 	uint8_t			*mac;
 
 	if (parse_args(ac, av, &args) < 0)
-		return (end("bad arguments.\n", -1));
+		return (end(USAGE, -1));
 	if (!(sock = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ARP))))
 		return (end("socket fucked.\n", -1));
 	if ((mac = get_mac()) == NULL)

@@ -20,6 +20,8 @@
 # define REQUEST 1 << 4
 # define REPLY 	2 << 4
 
+# define USAGE "Usage : ./ft_malcolm src_ip src_mac target_ip target_mac"
+
 typedef struct	s_args
 {
 	in_addr_t	src_ip;
