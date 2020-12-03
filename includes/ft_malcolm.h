@@ -17,8 +17,8 @@
 # include <netpacket/packet.h>
 
 # define AR_PROTOCOL 0x0806
-# define REQUEST 1 << 4
-# define REPLY 	2 << 4
+# define REQUEST 1
+# define REPLY 	2
 
 # define USAGE "Usage : ./ft_malcolm src_ip src_mac target_ip target_mac"
 
@@ -57,5 +57,6 @@ typedef struct			s_arp
 
 void	cpmac(uint8_t *dst, uint8_t src[6]);
 int	parse_args(int ac, char **av, t_args *args);
+void	wait_packet(int sock, t_arp *request);
 
 #endif

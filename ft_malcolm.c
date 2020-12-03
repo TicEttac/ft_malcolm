@@ -60,12 +60,12 @@ int	main(int ac, char **av)
 {
 	int 			sock;
 	t_args			args;
-	t_arp			packet;
+	t_arp			packet, request;
 	uint8_t			*mac;
 
 	if (parse_args(ac, av, &args) < 0)
 		return (end(USAGE, -1));
-	if (!(sock = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ARP))))
+	if ((sock = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ARP))) < 0)
 		return (end("socket fucked.\n", -1));
 	if ((mac = get_mac()) == NULL)
 	{
@@ -75,6 +75,7 @@ int	main(int ac, char **av)
 	cpmac(&(packet.src_mac[0]), mac);
 	free(mac);
 	setup_packet(&args, &packet);
+	wait_packet(sock, &request);
 /*	printf("src_mac ");
 	for (int i = 0; i < 6; i++)
 	{printf("%d:", packet.src_mac[i]);}
