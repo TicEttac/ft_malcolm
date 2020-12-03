@@ -1,14 +1,16 @@
 #include "ft_malcolm.h"
 
-uint8_t	hextoi(char i)
+bool	hextoi(char i, uint8_t *ret)
 {
 	if (i >= '0' && i <= '9')
-		return (i - '0');
-	if (i <= 'f' && i >= 'a')
-		return (i - 'a' + 10);
-	if (i <= 'F' && i >= 'A')
-		return (i - 'A' + 10);
-	return (-1);
+		*ret = (i - '0');
+	else if (i <= 'f' && i >= 'a')
+		*ret = (i - 'a' + 10);
+	else if (i <= 'F' && i >= 'A')
+		*ret = (i - 'A' + 10);
+	else
+		return (false);
+	return (true);
 
 }
 
@@ -23,13 +25,13 @@ uint8_t	*strtomac(char *str)
 		return (NULL);
 	while (i <= 5)
 	{
-		if ((tmp = hextoi(str[i * 3])) < 0)
+		if (!(hextoi(str[i * 3], &tmp)))
 		{
 			free(ret);
 			return (NULL);
 		}
 		ret[i] = tmp << 4;
-		if ((tmp = hextoi(str[i * 3 + 1])) < 0)
+		if (!(hextoi(str[i * 3 + 1], &tmp)))
 		{
 			free(ret);
 			return (NULL);
@@ -42,10 +44,8 @@ uint8_t	*strtomac(char *str)
 
 int	parse_args(int ac, char **av, t_args *args)
 {
-	int	i;
 	uint8_t	*tmp;
 
-	i = 0;
 	if (ac != 5)
 		return (-1);
 	args->src_ip = inet_addr(av[1]);
