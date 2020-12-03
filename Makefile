@@ -3,7 +3,6 @@
 #################################################################################
 
 NAME =			ft_malcolm
-AUTEUR =		"nisauvig"
 
 ###### SOURCES #######
 
@@ -40,9 +39,9 @@ CC =			gcc
 
 ########## GENERALS ##########
 
-all: ./auteur $(OBJ_DIR) $(NAME) $(HEADER)
+all:	$(OBJ_DIR) $(NAME) $(HEADER)
 
-re: fclean all
+re:	fclean all
 
 lre:
 	rm -r $(OBJ_DIR)
@@ -53,7 +52,7 @@ clean:
 
 fclean:
 	rm -rf $(OBJ_DIR) $(NAME) *.dSYM
-	echo "\033[31m\033[1m\033[4mCleaning\033[0m\033[31m : Everything\033[0m [$(NAME)]";
+	printf "\033[31m\033[1m\033[4mCleaning\033[0m\033[31m : Everything\033[0m [$(NAME)]\n";
 
 debug:
 	rm -r $(OBJ_DIR)
@@ -63,13 +62,13 @@ debug:
 
 $(NAME): $(OBJ)
 	$(CC) $(FLAGS) $(OBJ) -o $(NAME) -I$(HEADER_DIR)
-	echo "\n \033[1m\033[4m\033[35m\\^/ Done compiling \\^/\033[0m [$(NAME)]"
-	make header_print
+	printf "\n \033[1m\033[4m\033[35m\\^/ Done compiling \\^/\033[0m [$(NAME)]\n"
+	make --no-print-directory header_print
 
 $(NAME)_debug: ./auteur $(OBJ_DIR) $(HEADER) $(OBJ)
 	$(CC) $(DEBUG_FLAGS) $(OBJ) -o $(NAME) -I$(HEADER_DIR)
-	echo "\n \033[1m\033[4m\033[35m\\^/ Done compiling \\^/\033[0m [$(NAME)]"
-	make header_print
+	printf "\n \033[1m\033[4m\033[35m\\^/ Done compiling \\^/\033[0m [$(NAME)]\n"
+	make --no-print-directory header_print
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADER)
 	$(CC) $(FLAGS) -c $< -o $@ -I$(HEADER_DIR)
@@ -80,12 +79,8 @@ $(OBJ_DIR): $(ALL_OBJ_DIR)
 
 $(ALL_OBJ_DIR):
 	mkdir -p $@
-	echo "\033[32m\033[1m\033[4mCreated\033[0m\033[32m : $@ obj dir\033[0m"
-
-./auteur:
-	echo $(AUTEUR) > ./auteur
-	echo "\033[32m<Created Author file>\033[0m"
+	printf "\033[32m\033[1m\033[4mCreated\033[0m\033[32m : $@ obj dir\033[0m"
 
 header_print:
 	#TODO : header
-	echo "##########\033[32m NISAUVIG \033[0m##########"
+	printf "##########\033[32m NISAUVIG \033[0m##########"
