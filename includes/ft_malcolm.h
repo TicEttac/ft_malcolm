@@ -58,5 +58,6 @@ typedef struct			s_arp
 
 void	cpmac(uint8_t *dst, uint8_t src[6]);
 int	parse_args(int ac, char **av, t_args *args);
+int	wait_packet(int sock);
 
 #endif

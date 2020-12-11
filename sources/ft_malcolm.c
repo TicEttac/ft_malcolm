@@ -75,15 +75,12 @@ int	main(int ac, char **av)
 	cpmac(&(packet.src_mac[0]), mac);
 	free(mac);
 	setup_packet(&args, &packet);
-/*	printf("src_mac ");
-	for (int i = 0; i < 6; i++)
-	{printf("%d:", packet.src_mac[i]);}
-	printf("\n");
-	printf("dst_mac ");
-	for (int i = 0; i < 6; i++)
-	{printf("%d:", packet.dst_mac[i]);}
-	printf("\n");
-*/	close(sock);
+	if (wait_packet(sock) < 0)
+	{
+		close(sock);
+		return (end("error while waiting packet.\n", -1));
+	}
+	close(sock);
 	printf("everything went well.\n");
 	return (0);
 }
